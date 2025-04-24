@@ -39,7 +39,8 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'ansible/deploy.yml',
                     inventory: 'ansible/inventory',
-                    extras: "-e docker_image=${DOCKER_IMAGE}:${env.BUILD_NUMBER}"
+                    extras: "-e docker_image=${DOCKER_IMAGE}:${env.BUILD_NUMBER}",
+		    installation: 'ansible'
                 )
             }
         }

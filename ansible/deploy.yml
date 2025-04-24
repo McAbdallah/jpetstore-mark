@@ -1,0 +1,36 @@
+---
+   - name: Deploy JPetStore Docker container locally
+     hosts: local
+     become: yes
+     tasks:
+       - name: Install Docker
+         apt:
+           name: docker.io
+           state: present
+           update_cache: yes
+
+       - name: Start Docker service
+         service:
+           name: docker
+           state: started
+           enabled: yes
+
+       - name: Add Jenkins user to docker group
+         user:
+           name: jenkins
+           groups: docker
+           append: yes
+
+       - name: Ensure old JPetStore container is removed
+         docker_container:
+           name: jpetstore
+           state: absent
+
+       - name: Run JPetStore container
+         docker_container:
+           name: jpetstore
+           image: "{{ docker_image }}"
+           state: started
+           ports:
+             - "8080:8080"
+           restart_policy: always
