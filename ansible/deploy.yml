@@ -49,6 +49,10 @@
            name: docker
            state: started
            enabled: yes
+         register: docker_service
+         retries: 3
+         delay: 5
+         until: docker_service.state == "started"
 
        - name: Add Jenkins user to docker group
          user:
