@@ -1,6 +1,6 @@
 ---
 - name: Deploy JPetStore container locally
-  hosts: local
+  hosts: localhost
   connection: local
   become: yes
   gather_facts: false
