@@ -1,22 +1,7 @@
-# Use OpenJDK 17 as the base image
-FROM openjdk:17-jdk-slim
-
-# Set working directory
-WORKDIR /app
-
-# Copy Maven wrapper and project files
-COPY mvnw .
-COPY .mvn .mvn
-COPY pom.xml .
-
-# Copy source code
-COPY src src
-
-# Build the application
-RUN ./mvnw clean package -DskipTests
-
+FROM tomcat:9-jdk17
+# Copy the Maven-built WAR file to Tomcat's webapps directory
+COPY target/jpetstore.war /usr/local/tomcat/webapps/jpetstore.war
 # Expose port 8080
 EXPOSE 8080
-
-# Run the application
-CMD ["java", "-jar", "target/jpetstore-6.jar"]
+# Run Tomcat
+CMD ["catalina.sh", "run"]
