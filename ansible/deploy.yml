@@ -9,11 +9,6 @@
            groups: docker
            append: yes
 
-       - name: Ensure old JPetStore container is removed
-         docker_container:
-           name: jpetstore
-           state: absent
-
        - name: Run JPetStore container
          docker_container:
            name: jpetstore
