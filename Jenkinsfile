@@ -37,7 +37,7 @@ pipeline {
         stage('Deploy with Ansible') {
             steps {
                 ansiblePlaybook(
-                    playbook: 'ansible/deploy.yml',
+                    playbook: 'deploy.yml',
                     extras: "-e docker_image=${DOCKER_IMAGE}:${env.BUILD_NUMBER}",
 		    installation: 'ansible'
                 )

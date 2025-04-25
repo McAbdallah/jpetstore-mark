@@ -1,0 +1,80 @@
+---
+- name: Deploy JPetStore container locally
+  hosts: local
+  connection: local
+  become: yes
+  gather_facts: false
+
+  vars:
+    docker_image: "markemadd/jpetstore:latest"
+    ansible_user: "mdev"
+
+  tasks:
+    - name: Configure passwordless sudo for the user
+      become: true
+      lineinfile:
+        path: /etc/sudoers
+        line: "{{ ansible_user }} ALL=(ALL) NOPASSWD: ALL"
+        validate: '/usr/sbin/visudo -cf %s'
+      tags: sudo
+
+    - name: Clean up APT
+      apt:
+        autoclean: yes
+        autoremove: yes
+      ignore_errors: yes
+
+    - name: Fix broken dependencies
+      apt:
+        name: "*"
+        state: fixed
+      ignore_errors: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Install python3-pip
+      apt:
+        name: python3-pip
+        state: present
+        update_cache: yes
+
+    - name: Install Docker SDK for Python
+      pip:
+        name: docker
+        state: present
+        executable: pip3
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      register: docker_service
+      retries: 3
+      delay: 5
+      until: docker_service.state == "started"
+
+    - name: Add Jenkins user to docker group
+      user:
+        name: jenkins
+        groups: docker
+        append: yes
+
+    - name: Ensure old JPetStore container is removed
+      docker_container:
+        name: jpetstore
+        state: absent
+
+    - name: Run JPetStore container
+      docker_container:
+        name: jpetstore
+        image: "{{ docker_image }}"
+        state: started
+        ports:
+          - "8081:8080"
+        restart_policy: always
+
