@@ -1,6 +1,6 @@
 ---
    - name: Deploy JPetStore Docker container locally
-     hosts: local
+     hosts: localhost
      become: yes
      tasks:
        - name: Remove conflicting containerd.io package
