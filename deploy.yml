@@ -11,6 +11,7 @@
         source: build
         build:
           path: "{{ playbook_dir }}"
+   
     - name: Ensure old JPetStore container is removed
       docker_container:
         name: jpetstore
