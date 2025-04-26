@@ -67,14 +67,6 @@ jpetstore-cicd/
 
 ---
 
-## 📚 Lessons Learned
-
-- Robust playbooks reduce debugging effort
-- Dependency resolution is key for CI/CD reliability
-- Jenkins + Docker + Ansible works well for local pipelines
-- Debugging with `systemctl`, `journalctl`, and Ansible tasks is invaluable
-
----
 
 ## 🔮 Future Improvements
 
