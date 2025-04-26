@@ -5,11 +5,7 @@ pipeline {
         DOCKER_IMAGE = "markemadd/jpetstore"
     }
     stages {
-        stage('Clone Repository') {
-            steps {
-                git branch: 'master', url: 'https://github.com/markkemad/jpetstore-cicd.git'
-            }
-        }
+
         stage('Build with Maven') {
             steps {
 		sh 'chmod +x mvnw'

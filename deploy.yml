@@ -10,25 +10,8 @@
     ansible_user: "mdev"
 
   tasks:
-    - name: Configure passwordless sudo for the user
-      become: true
-      lineinfile:
-        path: /etc/sudoers
-        line: "{{ ansible_user }} ALL=(ALL) NOPASSWD: ALL"
-        validate: '/usr/sbin/visudo -cf %s'
-      tags: sudo
+    
 
-    - name: Clean up APT
-      apt:
-        autoclean: yes
-        autoremove: yes
-      ignore_errors: yes
-
-    - name: Fix broken dependencies
-      apt:
-        name: "*"
-        state: fixed
-      ignore_errors: yes
 
     - name: Install Docker
       apt:
