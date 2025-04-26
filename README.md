@@ -11,7 +11,7 @@ The JPetStore CI/CD project implements a fully automated CI/CD pipeline for the 
   - **Docker** – Containerization
   - **Ansible** – Deployment automation
   - **Docker Hub** – Image registry
-- **Deployment**: Local (http://localhost:8080/jpetstore)
+- **Deployment**: Local (http://localhost:8081/jpetstore)
 - **Exclusions**: No Prometheus, AWS, or Terraform
 - **Branch**: `master`
 
@@ -58,7 +58,7 @@ jpetstore-cicd/
 ## ✅ Outcomes
 
 - 🔄 Pipeline runs end-to-end from build to deployment
-- 🌐 App accessible at [http://localhost:8080/jpetstore](http://localhost:8080/jpetstore)
+- 🌐 App accessible at [http://localhost:8081/jpetstore](http://localhost:8080/jpetstore)
 - 🐳 Docker container verification:
   ```bash
   sudo docker ps
